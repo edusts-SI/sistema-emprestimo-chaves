@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema de Empréstimo de Chaves — Controle de acesso a laboratórios">
+  <title>Sistema de Empréstimo de Chaves</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <script type="module">
+    import { initTheme } from '../js/ui.js';
+    import { requireGuest } from '../js/auth.js';
+    initTheme();
+    requireGuest(); // redirects to dashboard if already logged in
+  </script>
+</head>
+<body>
+  <script>
+    // Redirect index to login
+    window.location.replace('login.html');
+  </script>
+  <noscript>
+    <p style="text-align:center;padding:2rem;font-family:sans-serif">
+      JavaScript é necessário para utilizar este sistema.
+      <a href="login.html">Ir para o login</a>
+    </p>
+  </noscript>
+</body>
+</html>

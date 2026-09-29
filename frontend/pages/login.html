@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Login — Sistema de Empréstimo de Chaves">
+  <title>Entrar — Sistema de Empréstimo de Chaves</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+
+<div class="login-page">
+
+  <!-- ── Left: Brand panel ── -->
+  <aside class="login-panel--brand" aria-hidden="true">
+    <div class="brand-content">
+
+      <div class="brand-logo">
+        <div class="brand-logo__icon">
+          <!-- Key icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7.5" cy="15.5" r="5.5"/>
+            <path d="M21 2l-9.6 9.6"/>
+            <path d="M15.5 7.5L18 10l3-3-2.5-2.5"/>
+          </svg>
+        </div>
+        <div class="brand-logo__text">
+          <strong>Empréstimo de Chaves</strong>
+          <span>Sistema institucional</span>
+        </div>
+      </div>
+
+      <h1 class="brand-headline">Controle de acesso<br>a laboratórios</h1>
+
+      <p class="brand-desc">
+        Gerencie o empréstimo das chaves dos laboratórios de forma organizada,
+        rastreável e segura. Solicitações, aprovações e devoluções em um único lugar.
+      </p>
+
+      <ul class="brand-features">
+        <li>
+          <span class="feature-icon">🔑</span>
+          Consulta em tempo real de disponibilidade
+        </li>
+        <li>
+          <span class="feature-icon">✔</span>
+          Fluxo de aprovação estruturado
+        </li>
+        <li>
+          <span class="feature-icon">📋</span>
+          Histórico completo e auditável
+        </li>
+        <li>
+          <span class="feature-icon">🔒</span>
+          Segurança com controle por perfil
+        </li>
+      </ul>
+
+    </div>
+  </aside>
+
+  <!-- ── Right: Login form ── -->
+  <main class="login-panel--form">
+    <div class="login-form-wrapper">
+
+      <div class="theme-toggle-top">
+        <button id="theme-toggle" class="btn btn--icon" aria-label="Alternar tema" title="Alternar tema claro/escuro">
+          <!-- icon rendered by JS -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+
+      <!-- Alert (e.g., inactive account) -->
+      <div id="login-alert" class="login-alert" role="alert" aria-live="polite"></div>
+
+      <p class="login-card__eyebrow">Acesso ao sistema</p>
+      <h2 class="login-card__title">Bem-vindo</h2>
+      <p class="login-card__subtitle">
+        Use sua conta Google institucional para acessar o sistema de empréstimo de chaves.
+      </p>
+
+      <!-- Google login button -->
+      <button id="btn-google-login" class="btn-google" type="button">
+        <!-- Google G logo -->
+        <svg class="btn-google__logo" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          <path fill="none" d="M0 0h48v48H0z"/>
+        </svg>
+        Continuar com Google
+      </button>
+
+      <div class="login-divider">
+        <span>informações</span>
+      </div>
+
+      <div class="login-info">
+        <strong>Acesso restrito</strong><br>
+        Somente usuários autorizados pelo administrador podem acessar o sistema.
+        Após o primeiro login, seu acesso precisa ser confirmado por um administrador.
+      </div>
+
+      <footer class="login-footer">
+        Sistema de Empréstimo de Chaves<br>
+        Uso exclusivo do departamento
+      </footer>
+
+    </div>
+  </main>
+
+</div>
+
+<script type="module">
+  import { initTheme, toggleTheme, showToast, setButtonLoading } from '../js/ui.js';
+  import { loginWithGoogle, requireGuest } from '../js/auth.js';
+
+  initTheme();
+
+  // Check reason param (e.g. ?reason=inativo)
+  const params = new URLSearchParams(window.location.search);
+  const reason = params.get('reason');
+  if (reason) {
+    const alertEl = document.getElementById('login-alert');
+    const messages = {
+      inativo: 'Sua conta está desativada. Entre em contato com o administrador.',
+      expired:  'Sua sessão expirou. Faça login novamente.',
+    };
+    alertEl.textContent = messages[reason] || 'Acesso não autorizado.';
+    alertEl.classList.add('login-alert--visible');
+  }
+
+  // Redirect if already logged in
+  await requireGuest();
+
+  // Theme toggle
+  document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+  // Google login
+  document.getElementById('btn-google-login').addEventListener('click', async () => {
+    const btn = document.getElementById('btn-google-login');
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner spinner--sm"></span> Redirecionando...`;
+    try {
+      await loginWithGoogle();
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = `
+        <svg class="btn-google__logo" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Continuar com Google`;
+      showToast(err.message || 'Erro ao iniciar login.', 'error');
+    }
+  });
+</script>
+
+</body>
+</html>

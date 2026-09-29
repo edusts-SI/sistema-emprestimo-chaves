@@ -26,3 +26,15 @@ build/
 
 # Arquivos locais do Supabase
 .supabase/
+
+# Dependências do Node.js
+node_modules/
+
+# Arquivos locais
+.env
+.env.*
+!.env.example
+
+# Sistema operacional
+.DS_Store
+Thumbs.db

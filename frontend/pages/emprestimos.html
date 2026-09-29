@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histórico de Empréstimos — Sistema de Empréstimo de Chaves</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <nav class="sidebar" id="sidebar" aria-label="Navegação principal">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-mark">
+        <div class="sidebar__logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5L18 10l3-3-2.5-2.5"/>
+          </svg>
+        </div>
+        <div class="sidebar__logo-text"><strong>Empréstimo<br>de Chaves</strong><span>Sistema institucional</span></div>
+      </div>
+    </div>
+    <div class="sidebar__nav">
+      <div class="nav-section">
+        <a href="dashboard.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+        <a href="laboratorios.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5L18 10l3-3-2.5-2.5"/></svg>Laboratórios</a>
+        <a href="emprestimos.html" class="nav-link nav-link--active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Histórico</a>
+      </div>
+      <div class="nav-section" data-requires-role="approver,admin">
+        <div class="nav-section__label">Gestão</div>
+        <a href="aprovacao.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aprovações</a>
+      </div>
+      <div class="nav-section" data-requires-role="admin">
+        <div class="nav-section__label">Administração</div>
+        <a href="alunos.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Usuários</a>
+        <a href="admin.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg>Admin</a>
+      </div>
+    </div>
+    <div class="sidebar__footer">
+      <div class="user-info">
+        <img id="user-avatar" class="user-info__avatar" src="" alt="Avatar">
+        <div class="user-info__details">
+          <div id="user-name" class="user-info__name">Carregando...</div>
+          <div id="user-role" class="user-info__role"></div>
+        </div>
+        <div class="user-info__actions">
+          <button id="theme-toggle" class="btn btn--icon" aria-label="Alternar tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+          <button id="logout-btn" class="btn btn--icon" aria-label="Sair" title="Sair"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Abrir menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="topbar__title">
+        <h1>Histórico de Empréstimos</h1>
+        <p>Registro completo de todas as solicitações</p>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <!-- Filters -->
+      <form id="filter-form" class="filter-bar">
+        <div class="form-group">
+          <label for="filter-status">Status</label>
+          <select id="filter-status">
+            <option value="">Todos</option>
+            <option value="pending">Pendente</option>
+            <option value="approved">Aprovado</option>
+            <option value="denied">Negado</option>
+            <option value="active">Em uso</option>
+            <option value="returned">Devolvido</option>
+            <option value="cancelled">Cancelado</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="filter-date-from">De</label>
+          <input type="date" id="filter-date-from">
+        </div>
+        <div class="form-group">
+          <label for="filter-date-to">Até</label>
+          <input type="date" id="filter-date-to">
+        </div>
+        <div class="form-group" style="justify-content:flex-end">
+          <label style="visibility:hidden">Ações</label>
+          <div class="action-group">
+            <button type="submit" class="btn btn--primary btn--sm">Filtrar</button>
+            <button type="button" id="filter-clear" class="btn btn--ghost btn--sm">Limpar</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Laboratório</th>
+              <th>Solicitante</th>
+              <th>Solicitado em</th>
+              <th>Aprovado em</th>
+              <th>Retirado em</th>
+              <th>Devolvido em</th>
+              <th>Status</th>
+              <th>Aprovador</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <tr><td colspan="8" class="table-loading">Carregando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script type="module" src="../js/emprestimos.js"></script>
+<script>
+  const toggle = document.getElementById('sidebar-toggle');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  toggle?.addEventListener('click', () => { sidebar.classList.toggle('sidebar--open'); overlay.classList.toggle('sidebar-overlay--active'); });
+  overlay?.addEventListener('click', () => { sidebar.classList.remove('sidebar--open'); overlay.classList.remove('sidebar-overlay--active'); });
+</script>
+
+</body>
+</html>
