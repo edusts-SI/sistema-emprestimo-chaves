@@ -118,9 +118,9 @@ export async function requireAuth(allowedRoles = null) {
   }
 
   if (!profile.ativo) {
-    // User exists but was deactivated by admin.
+    // User exists but was deactivated by admin or is pending approval.
     await supabase.auth.signOut();
-    redirectToLogin('inativo');
+    redirectToLogin('pending');
     return null;
   }
 

@@ -130,6 +130,7 @@
     const messages = {
       inativo: 'Sua conta está desativada. Entre em contato com o administrador.',
       expired:  'Sua sessão expirou. Faça login novamente.',
+      pending: 'Seu cadastro está em análise. Aguarde a aprovação de um administrador.',
     };
     alertEl.textContent = messages[reason] || 'Acesso não autorizado.';
     alertEl.classList.add('login-alert--visible');

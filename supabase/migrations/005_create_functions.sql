@@ -512,7 +512,7 @@ SET search_path = public, pg_catalog
 AS $$
 BEGIN
   INSERT INTO public.profiles (id, email, nome, avatar_url, role, ativo)
-  VALUES (p_id, p_email, COALESCE(p_name, split_part(p_email, '@', 1)), p_avatar, 'user', true)
+  VALUES (p_id, p_email, COALESCE(p_name, split_part(p_email, '@', 1)), p_avatar, 'user', false)
   ON CONFLICT (id) DO UPDATE
     SET
       email      = EXCLUDED.email,
