@@ -41,6 +41,15 @@
 
 .brand-content { position: relative; z-index: 1; }
 
+.brand-logo-image {
+  display: block;
+  width: 100%;
+  max-width: 390px;
+  max-height: 190px;
+  object-fit: contain;
+  margin: 0 auto 2.5rem;
+}
+
 .brand-logo {
   display: flex;
   align-items: center;

@@ -185,7 +185,15 @@ a:hover { color: var(--primary-hover); }
 .sidebar__logo-mark {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
+  justify-content: center;
+}
+
+.sidebar__logo-image {
+  display: block;
+  width: 100%;
+  max-width: 196px;
+  height: 68px;
+  object-fit: contain;
 }
 
 .sidebar__logo-icon {
