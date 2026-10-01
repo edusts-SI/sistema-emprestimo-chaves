@@ -113,6 +113,7 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 body {
@@ -309,6 +310,7 @@ a:hover { color: var(--primary-hover); }
 /* Main content area */
 .main-content {
   flex: 1;
+  min-width: 0;
   margin-left: var(--sidebar-width);
   display: flex;
   flex-direction: column;
@@ -317,7 +319,7 @@ a:hover { color: var(--primary-hover); }
 
 /* Top bar */
 .topbar {
-  height: var(--nav-height);
+  min-height: var(--nav-height);
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -329,16 +331,17 @@ a:hover { color: var(--primary-hover); }
   z-index: 90;
 }
 
-.topbar__title { flex: 1; }
+.topbar__title { flex: 1; min-width: 0; }
 .topbar__title h1 { font-size: 1.125rem; font-weight: 600; }
 .topbar__title p  { font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.0625rem; }
 
-.topbar__actions { display: flex; align-items: center; gap: 0.5rem; }
+.topbar__actions { display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; flex-wrap: wrap; }
 
 /* Page content */
 .page-content {
   padding: 1.75rem;
   flex: 1;
+  min-width: 0;
 }
 
 /* Mobile menu toggle */
@@ -481,7 +484,7 @@ a:hover { color: var(--primary-hover); }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr));
   gap: 1rem;
 }
 
@@ -489,7 +492,9 @@ a:hover { color: var(--primary-hover); }
    Tables
    --------------------------------------------------------------- */
 .table-wrapper {
+  max-width: 100%;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
   background: var(--surface);
@@ -588,6 +593,8 @@ input[type="datetime-local"],
 select,
 textarea {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   padding: 0.5625rem 0.75rem;
   font-size: 0.875rem;
   font-family: var(--font-sans);
@@ -629,6 +636,7 @@ textarea { resize: vertical; min-height: 80px; }
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  padding: 1rem;
 }
 
 .modal--open { display: flex; }
@@ -647,6 +655,7 @@ textarea { resize: vertical; min-height: 80px; }
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   width: 100%;
+  min-width: 0;
   max-width: 480px;
   max-height: 90vh;
   overflow-y: auto;
@@ -871,6 +880,8 @@ textarea { resize: vertical; min-height: 80px; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
   margin-bottom: 1rem;
 }
 .section-heading h3 { font-size: 1rem; font-weight: 600; }
@@ -930,6 +941,10 @@ textarea { resize: vertical; min-height: 80px; }
     margin-left: 0;
   }
 
+  .topbar {
+    padding-inline: 1rem;
+  }
+
   .sidebar-toggle {
     display: flex;
   }
@@ -940,23 +955,40 @@ textarea { resize: vertical; min-height: 80px; }
 }
 
 @media (max-width: 600px) {
-  .page-content { padding: 1rem; }
+  .page-content { padding: 1rem 0.875rem; }
 
-  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+  .stat-card { min-width: 0; padding: 1rem; }
+  .stat-card__label { overflow-wrap: anywhere; }
+  .stat-card__value { font-size: 1.75rem; }
 
   .page-header { flex-direction: column; }
+  .page-header__actions { width: 100%; }
+  .page-header__actions > * { max-width: 100%; }
 
   .filter-bar { flex-direction: column; }
-  .filter-bar .form-group { width: 100%; }
+  .filter-bar .form-group { width: 100%; min-width: 0; flex: auto; }
+  .filter-bar .action-group { width: 100%; flex-direction: row; }
+  .filter-bar .action-group .btn { flex: 1; }
 
-  .modal__panel { max-width: 100%; border-radius: var(--radius-md); }
+  .modal { padding: 0.75rem; }
+  .modal__panel { max-width: 100%; max-height: calc(100dvh - 1.5rem); border-radius: var(--radius-md); }
 
   table { font-size: 0.8125rem; }
-  thead th, tbody td { padding: 0.625rem 0.75rem; }
+  thead th, tbody td { padding: 0.625rem; }
 
   .toast-container { right: 0.75rem; left: 0.75rem; max-width: none; }
 
-  .action-group { flex-direction: column; }
+  .action-group { flex-wrap: wrap; }
+}
+
+@media (max-width: 380px) {
+  .topbar { gap: 0.5rem; padding-inline: 0.75rem; }
+  .topbar__title h1 { font-size: 1rem; }
+  .topbar__title p { font-size: 0.75rem; }
+  .page-content { padding-inline: 0.75rem; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .card { padding: 1rem; }
 }
 
 /* ---------------------------------------------------------------

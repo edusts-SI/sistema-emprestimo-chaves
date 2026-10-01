@@ -11,7 +11,8 @@
 
 /* Left panel — branding */
 .login-panel--brand {
-  flex: 0 0 480px;
+  flex: 0 1 480px;
+  min-width: 0;
   background: var(--primary);
   display: flex;
   flex-direction: column;
@@ -126,7 +127,8 @@
 
 /* Right panel — login form */
 .login-panel--form {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -260,8 +262,23 @@
 .btn-google .spinner { border-color: var(--border); border-top-color: var(--primary); }
 
 /* Responsive */
+@media (max-width: 900px) {
+  .login-panel--brand { flex-basis: 42%; padding: 2.5rem 2rem; }
+  .brand-logo-image { max-height: 160px; margin-bottom: 2rem; }
+  .brand-headline { font-size: 1.625rem; }
+  .login-panel--form { padding: 2rem 1.5rem; }
+  .login-form-wrapper .theme-toggle-top { margin-bottom: 2rem; }
+}
+
 @media (max-width: 768px) {
   .login-panel--brand { display: none; }
   .login-panel--form { padding: 2rem 1.25rem; }
   .login-form-wrapper { max-width: 100%; }
+}
+
+@media (max-width: 380px) {
+  .login-panel--form { padding: 1.5rem 1rem; }
+  .login-card__title { font-size: 1.45rem; }
+  .login-card__subtitle { margin-bottom: 1.75rem; }
+  .login-footer { margin-top: 1.75rem; }
 }
