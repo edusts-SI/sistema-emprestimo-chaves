@@ -183,10 +183,11 @@ a:hover { color: var(--primary-hover); }
 }
 
 .sidebar__logo-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
 }
+
+/* Oculta o rótulo legado caso uma página antiga ainda o carregue. */
+.sidebar__logo-text { display: none !important; }
 
 .sidebar__logo-image {
   display: block;
@@ -194,6 +195,7 @@ a:hover { color: var(--primary-hover); }
   max-width: 196px;
   height: 68px;
   object-fit: contain;
+  margin: 0 auto;
 }
 
 .sidebar__logo-icon {
